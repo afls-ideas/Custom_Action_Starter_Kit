@@ -1,0 +1,4 @@
+*.zip
+*.pdf
+sfdx-project.json
+.claude/settings.local.json
