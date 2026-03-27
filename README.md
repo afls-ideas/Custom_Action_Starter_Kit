@@ -59,7 +59,7 @@ The actual action configuration stored as a `LifeSciConfigRecord` (Tooling API o
 | `EntityType` | Where the action appears | `SObject` |
 | `EntityName` | Which object | `Account` |
 | `TargetType` | `External` (browser) or `Inline` (in-app modal) | `External` |
-| `TargetParameters` | Query string with merge fields | `q={Account.Id}` |
+| `TargetParameters` | Query string with merge fields | `q={Account.Name}` |
 | `QuickAction` | **Must match** the Standard Action name | `AFLS_Search_Google` |
 
 ### How They Connect
@@ -71,11 +71,11 @@ flowchart LR
     end
 
     subgraph Admin Console
-        CA["Custom Action<br/>QuickAction = <b>AFLS_Search_Google</b><br/>ActionTarget = https://google.com/search<br/>TargetParameters = q={Account.Id}"]
+        CA["Custom Action<br/>QuickAction = <b>AFLS_Search_Google</b><br/>ActionTarget = https://google.com/search<br/>TargetParameters = q={Account.Name}"]
     end
 
     QA -- "name match" --> CA
-    CA -- "runtime" --> URL["https://google.com/search?q=001xx000003DGbYAAW"]
+    CA -- "runtime" --> URL["https://google.com/search?q=Acme Corp"]
 ```
 
 The **QuickAction** field in the Custom Action must exactly match the **Name** of the Standard Action on the page layout. This is how LSC links the page layout button to the URL behavior.
@@ -89,10 +89,10 @@ Opens Google with the account ID as the search query.
 | Field | Value |
 |-------|-------|
 | Action Target | `https://www.google.com/search` |
-| Target Parameters | `q={Account.Id}` |
+| Target Parameters | `q={Account.Name}` |
 | Quick Action | `AFLS_Search_Google` |
 
-**Result:** `https://www.google.com/search?q=001xx000003DGbYAAW`
+**Result:** `https://www.google.com/search?q=Acme Corp`
 
 ## Deployment
 

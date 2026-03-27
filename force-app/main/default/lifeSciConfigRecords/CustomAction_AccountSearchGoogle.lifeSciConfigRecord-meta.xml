@@ -54,7 +54,7 @@
         <dataType>TEXT</dataType>
         <fieldName>TargetParameters</fieldName>
         <hasBooleanValue>false</hasBooleanValue>
-        <textValue>q={Account.Id}</textValue>
+        <textValue>q={Account.Name}</textValue>
     </fieldValues>
     <fieldValues>
         <dataType>PICKLIST</dataType>
