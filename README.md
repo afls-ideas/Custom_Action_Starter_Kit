@@ -5,7 +5,7 @@
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
 
-Deploy URL-based Custom Actions to Life Sciences Cloud that open external websites with dynamic record data (e.g., Google Search, CMS Open Payments).
+Deploy URL-based Custom Actions to Life Sciences Cloud that open external websites with dynamic record data (e.g., Google Search).
 
 ## How It Works
 
@@ -59,7 +59,7 @@ The actual action configuration stored as a `LifeSciConfigRecord` (Tooling API o
 | `EntityType` | Where the action appears | `SObject` |
 | `EntityName` | Which object | `Account` |
 | `TargetType` | `External` (browser) or `Inline` (in-app modal) | `External` |
-| `TargetParameters` | Query string with merge fields | `q={Account.Name}` |
+| `TargetParameters` | Query string with merge fields | `q={Account.Id}` |
 | `QuickAction` | **Must match** the Standard Action name | `AFLS_Search_Google` |
 
 ### How They Connect
@@ -71,11 +71,11 @@ flowchart LR
     end
 
     subgraph Admin Console
-        CA["Custom Action<br/>QuickAction = <b>AFLS_Search_Google</b><br/>ActionTarget = https://google.com/search<br/>TargetParameters = q={Account.Name}"]
+        CA["Custom Action<br/>QuickAction = <b>AFLS_Search_Google</b><br/>ActionTarget = https://google.com/search<br/>TargetParameters = q={Account.Id}"]
     end
 
     QA -- "name match" --> CA
-    CA -- "runtime" --> URL["https://google.com/search?q=John Smith"]
+    CA -- "runtime" --> URL["https://google.com/search?q=001xx000003DGbYAAW"]
 ```
 
 The **QuickAction** field in the Custom Action must exactly match the **Name** of the Standard Action on the page layout. This is how LSC links the page layout button to the URL behavior.
@@ -84,27 +84,15 @@ The **QuickAction** field in the Custom Action must exactly match the **Name** o
 
 ### Google Search (`CustomAction_AccountSearchGoogle`)
 
-Opens Google with the account name as the search query.
+Opens Google with the account ID as the search query.
 
 | Field | Value |
 |-------|-------|
 | Action Target | `https://www.google.com/search` |
-| Target Parameters | `q={Account.Name}` |
+| Target Parameters | `q={Account.Id}` |
 | Quick Action | `AFLS_Search_Google` |
 
-**Result:** `https://www.google.com/search?q=Acme Corp`
-
-### CMS Open Payments (`CustomAction_AccountSearchOpenPayments`)
-
-Searches the CMS Open Payments database by provider first/last name.
-
-| Field | Value |
-|-------|-------|
-| Action Target | `https://openpaymentsdata.cms.gov/search` |
-| Target Parameters | `searchType=Provider&FirstName={Account.FirstName}&LastName={Account.LastName}` |
-| Quick Action | `AFLS_Search_OpenPayments` |
-
-**Result:** `https://openpaymentsdata.cms.gov/search?searchType=Provider&FirstName=John&LastName=Smith`
+**Result:** `https://www.google.com/search?q=001xx000003DGbYAAW`
 
 ## Deployment
 
@@ -134,7 +122,7 @@ sf project deploy start --source-dir force-app --target-org <your-org-alias>
 ### Post-Deploy Steps
 
 1. **Add Standard Actions to Page Layout:**
-   Go to Setup > Object Manager > Account > Page Layouts > select your layout > drag `AFLS_Search_Google` and `AFLS_Search_OpenPayments` into the **"Salesforce Mobile and Lightning Experience Actions"** section.
+   Go to Setup > Object Manager > Account > Page Layouts > select your layout > drag `AFLS_Search_Google` into the **"Salesforce Mobile and Lightning Experience Actions"** section.
 
 2. **Regenerate Metadata Cache:**
    Go to Admin Console > generate a new metadata cache for the relevant profiles.
@@ -160,9 +148,7 @@ force-app/main/default/
 │   ├── placeholderLwc.js
 │   └── placeholderLwc.js-meta.xml
 ├── quickActions/                        # Standard Actions (scoped to Account)
-│   ├── Account.AFLS_Search_Google.quickAction-meta.xml
-│   └── Account.AFLS_Search_OpenPayments.quickAction-meta.xml
+│   └── Account.AFLS_Search_Google.quickAction-meta.xml
 └── lifeSciConfigRecords/                # Custom Action configs
-    ├── CustomAction_AccountSearchGoogle.lifeSciConfigRecord-meta.xml
-    └── CustomAction_AccountSearchOpenPayments.lifeSciConfigRecord-meta.xml
+    └── CustomAction_AccountSearchGoogle.lifeSciConfigRecord-meta.xml
 ```
