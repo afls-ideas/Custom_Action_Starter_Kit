@@ -4,7 +4,7 @@
         <dataType>TEXT</dataType>
         <fieldName>ActionTarget</fieldName>
         <hasBooleanValue>false</hasBooleanValue>
-        <textValue>https://openpaymentsdata.cms.gov/search?searchType=Provider&amp;FirstName={Account.FirstName}&amp;LastName={Account.LastName}</textValue>
+        <textValue>https://openpaymentsdata.cms.gov/search?searchType=Provider%26FirstName={Account.FirstName}%26LastName={Account.LastName}</textValue>
     </fieldValues>
     <fieldValues>
         <dataType>PICKLIST</dataType>
