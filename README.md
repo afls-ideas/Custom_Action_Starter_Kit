@@ -58,7 +58,7 @@ The actual action configuration stored as a `LifeSciConfigRecord` (Tooling API o
 | `ActionType` | `URL`, `App`, or `Utterance` | `URL` |
 | `EntityType` | Where the action appears | `SObject` |
 | `EntityName` | Which object | `Account` |
-| `TargetType` | `External` (browser) or `Inline` (in-app modal) | `External` |
+| `TargetType` | `External` (browser) or `Internal` (in-app modal) | `External` |
 | `TargetParameters` | Query string with merge fields | `q={Account.Name}` |
 | `QuickAction` | **Must match** the Standard Action name | `AFLS_Search_Google` |
 
