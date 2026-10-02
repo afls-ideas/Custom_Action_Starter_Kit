@@ -62,6 +62,10 @@ The actual action configuration stored as a `LifeSciConfigRecord` (Tooling API o
 | `TargetParameters` | Query string with merge fields | `q={Account.Name}` |
 | `QuickAction` | **Must match** the Standard Action name | `AFLS_Search_Google` |
 
+> **⚠️ `TargetType` value is release-dependent:**
+> - **Summer '26 (current):** use `Inline` for the in-app modal value.
+> - **Winter '27:** `Inline` is renamed to `Internal`. Update configs to use `Internal` once Winter '27 ships.
+
 ### How They Connect
 
 ```mermaid
